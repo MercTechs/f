@@ -9,6 +9,13 @@
     "programming",
     "typescript"
   ],
+  "bugs": {
+    "url": "https://github.com/merctechs/f/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/merctechs/f.git"
+  },
   "sideEffects": false,
   "author": {
     "name": "Long Nguyen",
