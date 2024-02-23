@@ -1,0 +1,154 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  typecheck-outputs:
+    name: 🚚 Typecheck Outputs / ${{ matrix.typescript-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        typescript-version:
+          - "~5.3.0"
+          - "~5.2.0"
+          - "~5.1.0"
+          # We use features that were added in v4.2 of typescript, so that is
+          # the lowest we can go here. This also means this is the lowest
+          # version we support. When this value changes in the future it needs
+          # to be communicated to the users.
+          - "~4.4.0"
+          - "~4.3.0"
+          - "~4.2.0"
+
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+
+      # Order is important here, we build with the typescript version defined
+      # in package.json, before we overrite it for the tests.
+      # TODO: We are rebuilding everything several times, our builds aren't very
+      # expensive, but we can easily optimize by caching the 'dist' directory
+      # once.
+      - name: 🏗️ Build
+        run: npm run build
+
+      - name: 📘 Install Typescript
+        run: npm install -D typescript@${{ matrix.typescript-version }}
+
+      - name: 🔎 Type check
+        run: npm run compile:dist
+
+  typecheck-source:
+    name: 👷 Typecheck Source
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+
+      - name: 🔎 Type check
+        run: npm run compile
+
+  test:
+    name: 🧪 Test [Node ${{ matrix.node }}]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node:
+          - 21
+          - 20
+          - 18
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+
+      - name: 🧪 Run tests
+        run: npm run test
+
+  lint:
+    name: 🧹 Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+      - name: Lint
+        run: npm run lint
+
+  prettier:
+    name: 💄 Formatting (prettier)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+      - name: Prettier
+        run: npm run prettier
+
+  publish:
+    needs:
+      - typecheck-source
+      - typecheck-outputs
+      - test
+    if: github.repository == 'merctechs/f' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+
+      - name: 🏗️ Build
+        run: npm run build
+
+      - name: 🚀 Release
+        run: npm run release
+        env:
+          GH_TOKEN: ${{secrets.GH_TOKEN}}
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
