@@ -124,6 +124,9 @@ jobs:
         run: npm run prettier
 
   publish:
+    permissions:
+      contents: read
+      pages: write
     needs:
       - typecheck-source
       - typecheck-outputs
