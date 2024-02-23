@@ -17,10 +17,7 @@
     "url": "git+https://github.com/merctechs/f.git"
   },
   "sideEffects": false,
-  "author": {
-    "name": "Long Nguyen",
-    "email": "hglong16@gmail.com"
-  },
+  "author": "Long Nguyen",
   "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",
   "jsnext:main": "dist/es/index.js",
