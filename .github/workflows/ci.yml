@@ -130,9 +130,6 @@ jobs:
         run: npm run prettier
 
   publish:
-    permissions:
-      contents: read
-      pages: write
     needs:
       - typecheck-source
       - typecheck-outputs
@@ -142,8 +139,6 @@ jobs:
     steps:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: ⎔ Setup node
         uses: actions/setup-node@v4
