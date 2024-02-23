@@ -6,6 +6,9 @@ on:
       - master
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
   typecheck-outputs:
     name: 🚚 Typecheck Outputs / ${{ matrix.typescript-version }}
