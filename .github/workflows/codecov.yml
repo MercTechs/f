@@ -1,0 +1,27 @@
+name: Codecov
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  codecov:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v4
+
+      - name: ⎔ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+
+      - name: ☔ Collect coverage
+        run: npm run coverage
+
+      - name: 🗺️ Upload coverage
+        uses: codecov/codecov-action@v4
