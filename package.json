@@ -1,6 +1,6 @@
 {
-  "name": "f",
-  "version": "0.0.1",
+  "name": "@merctechs/f",
+  "version": "0.0.2",
   "description": "A utility library for JavaScript and Typescript.",
   "keywords": [
     "utils",
@@ -17,7 +17,8 @@
     "url": "git+https://github.com/merctechs/f.git"
   },
   "sideEffects": false,
-  "author": "Long Nguyen",
+  "author": "Long Nguyen <hglong16@gmail.com>",
+  "license": "MIT",
   "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",
   "jsnext:main": "dist/es/index.js",

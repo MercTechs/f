@@ -33,16 +33,20 @@ module.exports = tseslint.config(
 
       // TODO: A lot of related typing issues arise from the fact that `any` is
       // used throughout the codebase.
-      "@typescript-eslint/no-unsafe-argument": "off",
-      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-argument":
+        "off",
+      "@typescript-eslint/no-unsafe-assignment":
+        "off",
       "@typescript-eslint/no-unsafe-call": "off",
-      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-unsafe-member-access":
+        "off",
       "@typescript-eslint/no-unsafe-return": "off",
 
       // TODO: Some of the cases this surfaces seem trivial fixes, but others
       // might be due to relying on bad types casted explicitly (`as T`) and some
       // due to not having typescript's 'noUncheckedIndexedAccess' enabled.
-      "@typescript-eslint/no-unnecessary-condition": "off",
+      "@typescript-eslint/no-unnecessary-condition":
+        "off",
 
       // TODO: The idiom for using `purry` right now is via the `arguments`
       // reserved keyword, but it's recommended to use a variadic instead (e.g.
@@ -54,7 +58,8 @@ module.exports = tseslint.config(
       // TODO: Once we bump our typescript `target` we should enable this rule
       // again, go over all the non-null-assertions, and see which ones are due to
       // a for loop which could use `Array.prototype.entries` instead.
-      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/no-non-null-assertion":
+        "off",
 
       // When our return type is just `undefined` (like `first([])`) this rule
       // considers the function as returning `void` (which is technically
@@ -62,7 +67,8 @@ module.exports = tseslint.config(
       // `undefined`), but this is not an error, it's by design. I don't know
       // what this rule expects us to do in those cases so turning it off for
       // now instead...
-      "@typescript-eslint/no-confusing-void-expression": "off",
+      "@typescript-eslint/no-confusing-void-expression":
+        "off",
     },
   },
   {

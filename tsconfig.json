@@ -1,6 +1,11 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
-  "include": ["src", "test", "*.config.js", "*.config.ts"],
+  "include": [
+    "src",
+    "test",
+    "*.config.js",
+    "*.config.ts"
+  ],
   "compilerOptions": {
     // TYPE CHECKING
     "strict": true,
@@ -31,7 +36,12 @@
     // most likely safe to up this value, and it would probably result in a
     // smaller package size.
     "target": "ES5",
-    "lib": ["ES6", "ES2017.Object", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES6",
+      "ES2017.Object",
+      "DOM",
+      "DOM.Iterable"
+    ],
     // COMPLETENESS
     "skipLibCheck": true
   }
