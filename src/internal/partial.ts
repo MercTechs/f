@@ -7,18 +7,23 @@ type PartialTuple<
   ? PartialTuple<TAIL, [...EXTRACTED, HEAD?]>
   : [...EXTRACTED, ...TUPLE];
 
-type PartialParams<
-  Fn extends (
-    ...args: Array<any>
-  ) => ReturnType<Fn>,
-> = PartialTuple<Parameters<Fn>>;
+type PartialParams<Fn extends (...args: Array<any>) => ReturnType<Fn>> =
+  PartialTuple<Parameters<Fn>>;
 
-export function partial<
-  F extends (...args: Array<any>) => ReturnType<F>,
->(fn: F, ...presetArgs: PartialParams<F>) {
-  return function (
-    ...laterArgs: PartialParams<F>
-  ): ReturnType<F> {
+export function partial<F extends (...args: Array<any>) => ReturnType<F>>(
+  fn: F,
+  ...presetArgs: PartialParams<F>
+) {
+  return function (...laterArgs: PartialParams<F>): ReturnType<F> {
     return fn(...presetArgs, ...laterArgs);
+  };
+}
+
+export function partialRight<F extends (...args: Array<any>) => ReturnType<F>>(
+  fn: F,
+  ...presetArgs: PartialParams<F>
+) {
+  return function (...laterArgs: PartialParams<F>): ReturnType<F> {
+    return fn(...laterArgs, ...presetArgs);
   };
 }
