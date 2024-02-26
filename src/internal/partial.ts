@@ -25,10 +25,9 @@ type PartialParams<Fn extends (...args: Array<any>) => ReturnType<Fn>> =
  * const add5 = partial(add, 5);
  * const result = add5(10); // 15
  */
-export function partial<F extends (...args: Array<any>) => ReturnType<F>>(
-  fn: F,
-  ...presetArgs: PartialParams<F>
-) {
+export function partial<
+  F extends (...args: Array<any>) => ReturnType<F>,
+>(fn: F, ...presetArgs: PartialParams<F>) {
   return function (...laterArgs: PartialParams<F>): ReturnType<F> {
     return fn(...presetArgs, ...laterArgs);
   };
@@ -46,10 +45,9 @@ export function partial<F extends (...args: Array<any>) => ReturnType<F>>(
  * const result = addFirstName("John"); // "John Doe"
  *
  */
-export function partialRight<F extends (...args: Array<any>) => ReturnType<F>>(
-  fn: F,
-  ...presetArgs: PartialParams<F>
-) {
+export function partialRight<
+  F extends (...args: Array<any>) => ReturnType<F>,
+>(fn: F, ...presetArgs: PartialParams<F>) {
   return function (...laterArgs: PartialParams<F>): ReturnType<F> {
     return fn(...laterArgs, ...presetArgs);
   };

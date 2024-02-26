@@ -1,10 +1,10 @@
 import { partial, partialRight } from "./partial";
 
-function add<T extends string | number>(a: T, b: T): T {
+function add<T extends string | number>(a: T, b: T) {
   if (typeof a === "number" && typeof b === "number") {
-    return (a + b) as T;
+    return a + b;
   } else if (typeof a === "string" && typeof b === "string") {
-    return (a + " " + b) as T;
+    return a + " " + b;
   } else {
     throw new Error("Operands must be of the same type.");
   }
