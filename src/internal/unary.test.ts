@@ -12,4 +12,9 @@ describe("unary", () => {
     const unaryFn = unary(fn);
     expect(unaryFn(1)).toBe("1");
   });
+  it("unary parseInt", () => {
+    const t = ["1", "2", "3"].map(unary(parseInt));
+    console.log(t);
+    expect(t).toEqual([1, 2, 3]);
+  });
 });
